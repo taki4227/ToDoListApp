@@ -1,5 +1,4 @@
-#　ToDoアプリ
-
+# ToDoアプリ
 ## 実行環境
 * Xcode8.2.1
 * Swift3
