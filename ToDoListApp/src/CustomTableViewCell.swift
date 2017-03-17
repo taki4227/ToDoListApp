@@ -9,7 +9,7 @@
 import UIKit
 
 class CustomTableViewCell: UITableViewCell {
-    
+
     @IBOutlet weak var timeLimitLabel: UILabel!
     @IBOutlet weak var toDoTitleLabel: UILabel!
 
@@ -20,12 +20,12 @@ class CustomTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-    /**
-     * セルをデータをセットする
-     * -parameter timeLimit: 期限
-     * -parameter title: タイトル
-     */
+
+    /// セルをデータをセットする
+    ///
+    /// - Parameters:
+    ///   - timeLimit: 期限
+    ///   - title: タイトル
     func setCell(timeLimit: String, title: String) {
         timeLimitLabel.text = timeLimit
         toDoTitleLabel.text = title

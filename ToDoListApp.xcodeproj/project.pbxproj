@@ -10,6 +10,7 @@
 		571857911E7BB170000637BD /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571857901E7BB170000637BD /* DateUtil.swift */; };
 		571857981E7BB5EF000637BD /* ToDoEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571857961E7BB5EF000637BD /* ToDoEntity+CoreDataClass.swift */; };
 		571857991E7BB5EF000637BD /* ToDoEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571857971E7BB5EF000637BD /* ToDoEntity+CoreDataProperties.swift */; };
+		5718579C1E7BC728000637BD /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5718579B1E7BC728000637BD /* UIColorExtension.swift */; };
 		57308B2B1E6AD926000D67B8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57308B2A1E6AD926000D67B8 /* CustomTextField.swift */; };
 		574956391E6C357B005FE948 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574956381E6C357B005FE948 /* CustomTableViewCell.swift */; };
 		574FBECB1E6A8D4E001FB649 /* AddToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574FBECA1E6A8D4E001FB649 /* AddToDoViewController.swift */; };
@@ -27,6 +28,7 @@
 		571857901E7BB170000637BD /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		571857961E7BB5EF000637BD /* ToDoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ToDoEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		571857971E7BB5EF000637BD /* ToDoEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ToDoEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5718579B1E7BC728000637BD /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		57308B2A1E6AD926000D67B8 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		574956381E6C357B005FE948 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		574FBECA1E6A8D4E001FB649 /* AddToDoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToDoViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +63,14 @@
 				571857901E7BB170000637BD /* DateUtil.swift */,
 			);
 			name = util;
+			sourceTree = "<group>";
+		};
+		5718579A1E7BC6FA000637BD /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				5718579B1E7BC728000637BD /* UIColorExtension.swift */,
+			);
+			name = extension;
 			sourceTree = "<group>";
 		};
 		57308B291E6AD8EF000D67B8 /* view */ = {
@@ -119,9 +129,10 @@
 		578084DD1E6840B9007DDB8F /* src */ = {
 			isa = PBXGroup;
 			children = (
-				5718578F1E7BB0D9000637BD /* util */,
 				578084DF1E6840E8007DDB8F /* controller */,
+				5718579A1E7BC6FA000637BD /* extension */,
 				578084DE1E6840E1007DDB8F /* model */,
+				5718578F1E7BB0D9000637BD /* util */,
 				57308B291E6AD8EF000D67B8 /* view */,
 				578084BA1E68320F007DDB8F /* AppDelegate.swift */,
 				578084C31E68320F007DDB8F /* LaunchScreen.storyboard */,
@@ -246,6 +257,7 @@
 				578084BD1E68320F007DDB8F /* ViewController.swift in Sources */,
 				571857911E7BB170000637BD /* DateUtil.swift in Sources */,
 				574FBECB1E6A8D4E001FB649 /* AddToDoViewController.swift in Sources */,
+				5718579C1E7BC728000637BD /* UIColorExtension.swift in Sources */,
 				571857991E7BB5EF000637BD /* ToDoEntity+CoreDataProperties.swift in Sources */,
 				578084BB1E68320F007DDB8F /* AppDelegate.swift in Sources */,
 			);

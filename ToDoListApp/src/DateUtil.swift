@@ -9,32 +9,28 @@
 import Foundation
 
 class DateUtil {
-    
-    /**
-     * フォーマッタ
-     */
+
+
+    /// フォーマッタ
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ja_JP")
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
         return dateFormatter
     }()
-    
-    
-    /**
-     * Date型を文字列に変換
-     * - parameter date: 日付
-     * - returns: yyyy/MM/dd HH:mm
-     */
+
+    /// Date型を文字列に変換
+    ///
+    /// - Parameter date: 日付
+    /// - Returns: yyyy/MM/dd HH:mm
     public static func dateToString(_ date: Date) -> String {
         return dateFormatter.string(from: date)
     }
-    
-    /**
-     * 文字列をDate型に変換
-     * - parameter date: 日付(yyyy/MM/dd HH:mm)
-     * - returns: Date
-     */
+
+    /// 文字列をDate型に変換
+    ///
+    /// - Parameter dateStirng: 日付(yyyy/MM/dd HH:mm)
+    /// - Returns: Date
     public static func stringToDate(_ dateStirng: String) -> Date {
         return dateFormatter.date(from: dateStirng)!
     }
