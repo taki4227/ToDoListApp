@@ -2,9 +2,8 @@
 //  ToDoEntity+CoreDataProperties.swift
 //  ToDoListApp
 //
-//  Created by 滝本直樹 on 2017/03/02.
+//  Created by Naoki Takimoto on 2017/03/17.
 //  Copyright © 2017年 takimoto. All rights reserved.
-//  This file was automatically generated and should not be edited.
 //
 
 import Foundation
@@ -17,8 +16,8 @@ extension ToDoEntity {
         return NSFetchRequest<ToDoEntity>(entityName: "ToDoEntity");
     }
 
-    @NSManaged public var time_limit: NSDate?
-    @NSManaged public var content: NSObject?
-    @NSManaged public var tag_color: Int16
+    @NSManaged public var content: String?
+    @NSManaged public var tagColor: Bool
+    @NSManaged public var timeLimit: NSDate?
 
 }

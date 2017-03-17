@@ -11,21 +11,20 @@ import CoreData
 
 class AddToDoViewController: UIViewController, UIToolbarDelegate {
     
+    // MARK: - Outlets
+    
+    @IBOutlet weak var toDoTitleTextField: UITextField!
+    @IBOutlet weak var timeLimitView: UIView!
+    @IBOutlet weak var timeLimitTextField: UITextField!
+    
+    // MARK: - Private Properties
+    
     var toolBar:UIToolbar!
     var datePicker: UIDatePicker!
     
     private var isImportant = true
     
-    lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ja_JP")
-        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-        return dateFormatter
-    }()
-    
-    @IBOutlet weak var toDoTitleTextField: UITextField!
-    @IBOutlet weak var timeLimitView: UIView!
-    @IBOutlet weak var timeLimitTextField: UITextField!
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,6 +91,7 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
                 // 正常処理
                 
                 // 登録処理
+                _ = createToDo()
                 
                 return true
             } else {
@@ -133,7 +133,7 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
      */
     func onClickDoneButton(sender: UIBarButtonItem) {
         // テキストの入力
-        timeLimitTextField.text = self.dateToString(datePicker.date)
+        timeLimitTextField.text = DateUtil.dateToString(datePicker.date)
         // キーボードを隠す
         timeLimitTextField.resignFirstResponder()
     }
@@ -147,28 +147,10 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
     }
     
     /**
-     * Date型を文字列に変換
-     * - parameter date: 日付
-     * - returns: yyyy/MM/dd HH:mm
-     */
-    func dateToString(_ date: Date) -> String {
-        return dateFormatter.string(from: date)
-    }
-    
-    /**
-     * 文字列をDate型に変換
-     * - parameter date: 日付(yyyy/MM/dd HH:mm)
-     * - returns: Date
-     */
-    func stringToDate(_ dateStirng: String) -> Date {
-        return dateFormatter.date(from: dateStirng)!
-    }
-    
-    /**
      * 入力チェック
      * - returns: true: 正常, false: 不正
      */
-    func inputCheck() -> Bool {
+    private func inputCheck() -> Bool {
         if toDoTitleTextField.text != ""
             && timeLimitTextField.text != "" {
             return true
@@ -181,7 +163,7 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
      * 登録処理
      * - returns: true: 成功, false: 失敗
      */
-    func createToDo() -> Bool {
+    private func createToDo() -> Bool {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let viewContext = appDelegate.persistentContainer.viewContext
         // Insertするテーブルを指定
@@ -190,8 +172,8 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
         // レコード作成
         let newRecord = NSManagedObject(entity: entity!, insertInto: viewContext)
         newRecord.setValue(toDoTitleTextField.text, forKey: "content")
-        newRecord.setValue(stringToDate(timeLimitTextField.text!), forKey: "time_limit")
-        newRecord.setValue(isImportant, forKey: "tag_color")
+        newRecord.setValue(DateUtil.stringToDate(timeLimitTextField.text!), forKey: "timeLimit")
+        newRecord.setValue(isImportant, forKey: "tagColor")
         
         // 登録
         do {

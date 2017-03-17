@@ -7,24 +7,34 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    private var isRegisterSuccess = false
     
-    private let refreshControl = UIRefreshControl()
+    // MARK: - Outlets
     
     @IBOutlet weak var naviBar: UINavigationBar!
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var toDoListTableView: UITableView!
     
+    // MARK: - Private Properties
+    
+    private var isRegisterSuccess = false
+    
+    private var toDoList = [ToDoEntity]()
+    
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // UITableViewDelegate を追加
-        // UITableViewDatasource を追加
+        // UITableViewDelegate, UITableViewDatasource を追加
         toDoListTableView.dataSource = self
         toDoListTableView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        selectToDoList()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,6 +69,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
      * -parameter segue: Segue
      */
     @IBAction func registerSuccess(segue: UIStoryboardSegue) {
+        
+        // テーブル再描画
+        selectToDoList()
+        toDoListTableView.reloadData()
+        
         // 完了フラグを立てる
         isRegisterSuccess = true
     }
@@ -67,7 +82,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
      * 一つのsectionの中にセルの個数を指定する
      */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return toDoList.count
     }
     
     /**
@@ -79,15 +94,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell") as! CustomTableViewCell
         
         // セルにデータをセット
-        cell.setCell(timeLimit: "yyyy/mm/dd hh:mm", title: "swift")
+        let toDoEntity = toDoList[indexPath.row]
+        cell.setCell(timeLimit: DateUtil.dateToString(toDoEntity.timeLimit as! Date)
+            , title: toDoEntity.content!)
         
-        // セルの色を変える
-        let isImportant = true
-        if isImportant {
+        // セルの背景色を変える
+        if toDoEntity.tagColor {
             cell.backgroundColor = UIColor.yellow
         }
         
         return cell
+    }
+    
+    private func selectToDoList() {
+        // リストの初期化
+        toDoList.removeAll()
+        
+        // データ取得
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let viewContext = appDelegate.persistentContainer.viewContext
+        
+        let request:NSFetchRequest<ToDoEntity> = ToDoEntity.fetchRequest()
+        // 期限の昇順
+        let sort = NSSortDescriptor(key: "timeLimit", ascending: true)
+        request.sortDescriptors = [sort]
+        
+        toDoList = try! viewContext.fetch(request)
     }
 
 }
