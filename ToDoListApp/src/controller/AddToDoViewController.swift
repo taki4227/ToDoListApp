@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddToDoViewController: UIViewController, UIToolbarDelegate {
+class AddToDoViewController: UIViewController, UIToolbarDelegate, UITextFieldDelegate {
 
     // MARK: - Outlets
 
@@ -22,12 +22,15 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
     var toolBar: UIToolbar!
     var datePicker: UIDatePicker!
 
-    private var isImportant = true
+    private var isImportant = false
 
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // UITextFieldDelegateの追加
+        toDoTitleTextField.delegate = self
 
         // タイトルのTextFieldにパディング設定
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
@@ -35,6 +38,9 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
         toDoTitleTextField.leftViewMode = UITextFieldViewMode.always
         toDoTitleTextField.rightView = padding
         toDoTitleTextField.rightViewMode = UITextFieldViewMode.always
+
+        // TextFieldの改行キーを変更
+        toDoTitleTextField.returnKeyType = .done
 
         // 期限のViewにシングルタップしたときのアクション（tapSingle）の設定
         let timeLimitViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.onClickTimeLimitTextField(gesture:)))
@@ -69,6 +75,19 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    // MARK: - UITextFieldDelegate
+
+    /// 完了ボタンを押したときの処理
+    ///
+    /// - Parameter textField: UITextField
+    /// - Returns: true: 処理を行う, false: 処理を行わない
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを隠す
+        toDoTitleTextField.resignFirstResponder()
+
+        return true
     }
 
     /// 画面遷移するかどうかの処理
@@ -145,6 +164,7 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
     /// - Parameter gesture: UITapGestureRecognizer
     func onClickBackground(gesture: UITapGestureRecognizer) {
         // キーボードを隠す
+        toDoTitleTextField.resignFirstResponder()
         timeLimitTextField.resignFirstResponder()
     }
 
