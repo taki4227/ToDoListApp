@@ -136,6 +136,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if toDoEntity.tagColor {
             cell.backgroundColor = UIColor.AppColor.highlightColor
         }
+        
+        // 選択されたときの色なし
+        cell.selectionStyle = .none
 
         return cell
     }
