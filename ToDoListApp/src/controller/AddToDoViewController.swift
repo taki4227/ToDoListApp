@@ -182,6 +182,7 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate {
             return true
         } catch {
             // 失敗
+            print("登録失敗")
             return false
         }
     }

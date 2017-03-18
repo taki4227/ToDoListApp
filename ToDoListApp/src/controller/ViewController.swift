@@ -85,12 +85,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return toDoList.count
     }
+    
+    /// 各indexPathのセルが編集(削除，移動等)を行えるか指定する
+    ///
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: index
+    /// - Returns: true: 編集可, false: 編集不可
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    
+    /// 各indexPathのセルのスワイプメニューがタップされた際に呼ばれる
+    ///
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - editingStyle: style (none, insert, delete)
+    ///   - indexPath: index
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            // セル削除
+            // データ削除 → テーブル更新 の順番で処理しないとエラーで落ちる
+            
+            // データ削除
+            deleteToDo(index: indexPath.row)
+            
+            // テーブル更新
+            tableView.deleteRows(at: [indexPath], with: .bottom)
+        }
+    }
 
     /// セルに値を設定する
     ///
     /// - Parameters:
     ///   - tableView: UITableView
-    ///   - indexPath: 行のインデックス
+    ///   - indexPath: index
     /// - Returns: UITableViewCell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -110,20 +140,48 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
 
+    
+    /// ToDoリストの取得
     private func selectToDoList() {
         // リストの初期化
         toDoList.removeAll()
 
         // データ取得
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let viewContext = appDelegate.persistentContainer.viewContext
+        let context = appDelegate.persistentContainer.viewContext
 
         let request: NSFetchRequest<ToDoEntity> = ToDoEntity.fetchRequest()
         // 期限の昇順
         let sort = NSSortDescriptor(key: "timeLimit", ascending: true)
         request.sortDescriptors = [sort]
 
-        toDoList = try! viewContext.fetch(request)
+        do {
+            toDoList = try context.fetch(request)
+        } catch {
+            print("取得失敗")
+        }
+        
+    }
+    
+    /// ToDo削除
+    private func deleteToDo(index: Int) {
+        // データ削除
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let request: NSFetchRequest<ToDoEntity> = ToDoEntity.fetchRequest()
+        
+        do {
+            toDoList = try context.fetch(request)
+            let deleteObject = toDoList[index] as ToDoEntity
+            context.delete(deleteObject)
+            try context.save()
+            
+            // 削除に成功したら、リストの削除も行う
+            toDoList.remove(at: index)
+        } catch {
+            print("削除失敗")
+        }
+
     }
 
 }
