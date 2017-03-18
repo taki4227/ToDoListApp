@@ -56,9 +56,9 @@ class AddToDoViewController: UIViewController, UIToolbarDelegate, UITextFieldDel
         // UIToolBarの設定
         toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.bounds.size.height - 44, width: self.view.bounds.size.width, height: 40.0))
         toolBar.layer.position = CGPoint(x: self.view.frame.size.width / 2, y: self.view.frame.size.height - 20.0)
-        toolBar.barStyle = .blackTranslucent
+        toolBar.barStyle = .default
+        toolBar.barTintColor = UIColor.AppColor.defaultPrimaryColor
         toolBar.tintColor = UIColor.white
-        toolBar.backgroundColor = UIColor.black
 
         // ToolBarのボタンの設定
         let toolBarDoneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.onClickDoneButton(sender:)))

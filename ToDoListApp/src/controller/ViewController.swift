@@ -31,6 +31,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // UITableViewDelegate, UITableViewDatasource を追加
         toDoListTableView.dataSource = self
         toDoListTableView.delegate = self
+
+        // リストの空行の下線を消す
+        toDoListTableView.tableFooterView = UIView(frame: .zero)
+
+        // 追加ボタンを設置
+        // storyboard上に設定すると、デフォルトでtintColorに塗りつぶされる
+        addButton.image = UIImage(named: "AddButton.png")?.withRenderingMode(.alwaysOriginal)
     }
 
     override func viewWillAppear(_ animated: Bool) {
