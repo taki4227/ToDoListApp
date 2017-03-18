@@ -10,7 +10,7 @@ import UIKit
 
 extension UIColor {
 
-    
+
     /// アプリのテーマカラー
     struct AppColor {
         /// 暗めのテーマカラー #colorLiteral(red: 0.4274509804, green: 0.7568627451, blue: 0.6196078431, alpha: 1)
@@ -27,9 +27,11 @@ extension UIColor {
         static var secondaryTextColor: UIColor { return UIColor.hex(hexStr: "#757575", alpha: 1) }
         /// 境界線カラー #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1)
         static var dividerColor: UIColor { return UIColor.hex(hexStr: "#BDBDBD", alpha: 1) }
-        
+
         /// ハイライトカラー #colorLiteral(red: 1, green: 0.8039215686, blue: 0.8235294118, alpha: 1)
         static var highlightColor: UIColor { return UIColor.hex(hexStr: "#FFCDD2", alpha: 1) }
+        /// DeleteボタンのBGカラー #colorLiteral(red: 0.9960784314, green: 0.2196078431, blue: 0.1411764706, alpha: 1)
+        static var deleteButtonBgColor: UIColor { return UIColor.hex(hexStr: "#FE3824", alpha: 1) }
     }
 
     /// RGB値をUIColorに変換

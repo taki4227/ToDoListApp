@@ -104,23 +104,40 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
 
-    /// 各indexPathのセルのスワイプメニューがタップされた際に呼ばれる
+    /// 各indexPathのセルがスワイプされた際に表示するスワイプメニューのアクセサリボタンの内容を指定する
     ///
     /// - Parameters:
     ///   - tableView: UITableView
-    ///   - editingStyle: style (none, insert, delete)
     ///   - indexPath: index
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-            // セル削除
-            // データ削除 → テーブル更新 の順番で処理しないとエラーで落ちる
+    /// - Returns: UITableView
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        // Deleteボタン
+        let deleteButton = UITableViewRowAction(style: .normal, title: "Delete") { (action: UITableViewRowAction, idx: IndexPath) in
+            // 確認ダイアログ表示
+            let confirmAlertController = UIAlertController(title: "Confirm", message: "削除してもよろしいですか？", preferredStyle: .alert)
 
-            // データ削除
-            deleteToDo(index: indexPath.row)
+            // キャンセルボタン
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            confirmAlertController.addAction(cancelAction)
 
-            // テーブル更新
-            tableView.deleteRows(at: [indexPath], with: .bottom)
+            // OKボタン
+            let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                // セル削除
+                // データ削除 → テーブル更新 の順番で処理しないとエラーで落ちる
+
+                // データ削除
+                self.deleteToDo(index: indexPath.row)
+
+                // テーブル更新
+                tableView.deleteRows(at: [indexPath], with: .bottom)
+            }
+            confirmAlertController.addAction(okAction)
+
+            self.present(confirmAlertController, animated: true, completion: nil)
         }
+        deleteButton.backgroundColor = UIColor.AppColor.deleteButtonBgColor
+
+        return [deleteButton]
     }
 
     /// セルに値を設定する
