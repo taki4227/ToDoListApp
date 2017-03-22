@@ -21,14 +21,32 @@ class CustomTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+
+        // タップ時のハイライト設定
+//        if(highlighted) {
+//            self.alpha = 0.8
+//        } else {
+//            self.alpha = 1.0
+//        }
+    }
+
     /// セルをデータをセットする
     ///
     /// - Parameters:
     ///   - timeLimit: 期限
     ///   - title: タイトル
-    func setCell(timeLimit: String, title: String) {
+    func setCell(timeLimit: String, title: String, tagColor: Bool) {
         timeLimitLabel.text = timeLimit
         toDoTitleLabel.text = title
+
+        if tagColor {
+            self.backgroundColor = UIColor.AppColor.highlightColor
+        } else {
+            self.backgroundColor = UIColor.white
+        }
+
     }
 
 }

@@ -103,7 +103,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return true
     }
 
-
     /// 各indexPathのセルがスワイプされた際に表示するスワイプメニューのアクセサリボタンの内容を指定する
     ///
     /// - Parameters:
@@ -154,14 +153,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // セルにデータをセット
         let toDoEntity = toDoList[indexPath.row]
         cell.setCell(timeLimit: DateUtil.dateToString(toDoEntity.timeLimit as! Date)
-                     , title: toDoEntity.content!)
-
-        // セルの背景色を変える
-        if toDoEntity.tagColor {
-            cell.backgroundColor = UIColor.AppColor.highlightColor
-        } else {
-            cell.backgroundColor = UIColor.white
-        }
+                     , title: toDoEntity.content!, tagColor: toDoEntity.tagColor)
 
         // 選択されたときの色なし
         cell.selectionStyle = .none
